@@ -80,12 +80,12 @@
                  </label>
                  
                  <div class="signUp-input-area">
-                     <input type="text" id="memberPw" name="memberPw"
+                     <input type="password" id="memberPw" name="memberPw"
                              placeholder="비밀번호" maxlength="30">
                  </div>
  
                  <div class="signUp-input-area">
-                     <input type="text" id="memberPwConfirm"
+                     <input type="password" id="memberPwConfirm"
                              placeholder="비밀번호 확인" maxlength="30">
                  </div>
  
@@ -128,15 +128,15 @@
                      <input type="text" id="memberAddress" name="memberAddress"
                              placeholder="우편번호" maxlength="6">
                      
-                     <button type="button">검색</button>
+                     <button type="button" onclick="sample4_execDaumPostcode()">검색</button>
                  </div>
  
                  <div class="signUp-input-area">
-                     <input type="text" name="memberAddress" placeholder="도로명주소">
+                     <input type="text" id="sample4_roadAddress" name="memberAddress" placeholder="도로명주소">
                  </div>
  
                  <div class="signUp-input-area">
-                     <input type="text" name="memberAddress" placeholder="상세주소">
+                     <input type="text" id="sample4_detailAddress" name="memberAddress" placeholder="상세주소">
                  </div>
  
                  <button type="submit" id="signUp-btn">가입하기</button>
@@ -157,6 +157,8 @@
 
     <!-- signUp.js 연결 -->
     <script src="${contextPath}/resources/js/member/signUp.js"></script>
+	
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
  </body>
  </html>

@@ -283,6 +283,15 @@ public class MemberController {
 	// 회원 가입
 	public String signUp(Member inputMember, RedirectAttributes ra) {
 		
+		
+		if(inputMember.getMemberAddress() != null) {
+			String[] address = inputMember.getMemberAddress().split(",");
+			String address2 = String.join(",,", address);
+			inputMember.setMemberAddress(address2);
+		} else {
+			inputMember.setMemberAddress(null);
+		}
+				
 		int result = service.signUp(inputMember);
 		
 		if(result == 1) {

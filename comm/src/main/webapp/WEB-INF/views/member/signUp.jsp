@@ -125,7 +125,7 @@
                  </label>
                  
                  <div class="signUp-input-area">
-                     <input type="text" id="memberAddress" name="memberAddress"
+                     <input type="text" id="sample4_postcode" name="memberAddress"
                              placeholder="우편번호" maxlength="6">
                      
                      <button type="button" onclick="sample4_execDaumPostcode()">검색</button>
@@ -138,7 +138,9 @@
                  <div class="signUp-input-area">
                      <input type="text" id="sample4_detailAddress" name="memberAddress" placeholder="상세주소">
                  </div>
- 
+                 <span id="guide" style="color:#999;display:none"></span>
+ 				 <input type="text" id="sample4_extraAddress" placeholder="참고항목" style="display: none;">
+ 				 <input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="display: none;">
                  <button type="submit" id="signUp-btn">가입하기</button>
  
              </form>
