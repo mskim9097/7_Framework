@@ -57,24 +57,6 @@
 
                     <tbody id="memberList">
 
-                        <tr>
-                            <td>1</td>
-                            <td>user01@kh.or.kr</td>
-                            <td>유저일</td>
-                        </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <td>user02@kh.or.kr</td>
-                            <td>유저이</td>
-                        </tr>
-
-                        <tr>
-                            <td>3</td>
-                            <td>user03@kh.or.kr</td>
-                            <td>유저삼</td>
-                        </tr>
-
                     </tbody>
                 </table>
                 

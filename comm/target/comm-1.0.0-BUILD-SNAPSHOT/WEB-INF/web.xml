@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app version="4.0" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	xsi:schemaLocation="http://JAVA.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_4_0.xsd">
 
+
+	<!-- web.xml(배포 서술자)
+		* WAS(Web Application Server) : 동적 웹(요청에 따라 응답페이지 생성)에서 사용하는 서버
+		
+		- WAS가 실행(배포 시작)될 때 가장 처음으로 읽어들이는 문서
+		- 서버 실행 시 초기 설정 내용 또는 설정 내용이 작성된 파일을 읽고 수행하도록 함.
+	 -->
+	 
+	 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>
+			classpath:spring/root-context.xml
+			classpath:spring/spring-security.xml
+		</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -15,12 +27,20 @@
 	</listener>
 
 	<!-- Processes application requests -->
+	
+	<!-- DispatcherServlet : 요청/응답을 나눠주는 서블릿 
+	
+		[Front Controller]
+		모든 요청을 앞에서 받아들여 알맞은 Controller로 연결을 해주고
+		Controller의 반환 결과에 따라서 알맞은 View를 선택해 클라이언트에게 응답하는 역할
+	-->
+	
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+			<param-value>classpath:spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -29,5 +49,21 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
+	
+	<!-- 한글 깨짐 방지를 위한 Filter 추가 -->
+	<!-- 별도의 filter 클래스를 만들지 않고 스프링에서 제공하는 filter를 사용 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 </web-app>
