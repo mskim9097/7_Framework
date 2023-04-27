@@ -74,9 +74,7 @@ public class MemberDAO {
 	 */
 	public int signUp(Member inputMember) {
 		
-		int result = sqlSession.insert("memberMapper.signUp", inputMember);
-		
-		return result;
+		return sqlSession.insert("memberMapper.signUp", inputMember);
 	}
 
 	/** 회원 1명 정보 조회 DAO

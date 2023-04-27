@@ -106,9 +106,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		inputMember.setMemberPw(bcrypt.encode(inputMember.getMemberPw()));
 		
-		int result = dao.signUp(inputMember);
-		
-		return result;
+		return dao.signUp(inputMember);
 	}
 
 	// 회원 1명 정보 조회 구현

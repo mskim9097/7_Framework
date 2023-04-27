@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="myPageMapper">
+  
+  <resultMap type="member" id="member_rm">
+	
+		<id property="memberNo" column="MEMBER_NO"/>
+		
+		<result property="memberEmail" 		column="MEMBER_EMAIL"/>
+		<result property="memberPw" 		column="MEMBER_PW"/>
+		<result property="memberNickname" 	column="MEMBER_NICK"/>
+		<result property="memberTel" 		column="MEMBER_TEL"/>
+		<result property="memberAddress" 	column="MEMBER_ADDR"/>
+		<result property="profileImage" 	column="PROFILE_IMG"/>
+		<result property="enrollDate" 		column="ENROLL_DT"/>
+		<result property="secessionFlag" 	column="SECESSION_FL"/>
+		
+	</resultMap>
+	
+	
+	<!-- 비밀번호 확인 -->
+	<select id="checkPw" parameterType="member" resultType="string">
+		SELECT MEMBER_PW FROM MEMBER_S
+		WHERE MEMBER_EMAIL = #{memberEmail}
+		AND SECESSION_FL = 'N'
+	</select>
+	
+	<update id="secession" parameterType="member">
+		UPDATE MEMBER_S SET SECESSION_FL = 'Y' WHERE MEMBER_EMAIL = #{memberEmail}
+	</update>
+	
+	<update id="changePw" parameterType="member">
+		UPDATE MEMBER_S SET MEMBER_PW = #{memberPw} WHERE MEMBER_EMAIL = #{memberEmail}
+	</update>
+	
+	<update id="updateInfo" parameterType="member">
+		UPDATE MEMBER_S SET 
+		MEMBER_NICK = #{memberNickname}, 
+		MEMBER_TEL = #{memberTel}, 
+		MEMBER_ADDR = #{memberAddress}
+		WHERE MEMBER_EMAIL = #{memberEmail}
+	</update>
+  
+</mapper>
