@@ -104,8 +104,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int signUp(Member inputMember) {
 		
+		// 비밀번호 암호화(bcrypt)
 		inputMember.setMemberPw(bcrypt.encode(inputMember.getMemberPw()));
 		
+		// DAO 호출후 리턴
 		return dao.signUp(inputMember);
 	}
 

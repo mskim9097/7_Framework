@@ -155,7 +155,8 @@
 		AND SECESSION_FL = 'N'
 	</select>
 	
-	<!-- 회원가입 -->
+	
+	<!-- 회원 가입 -->
 	<insert id="signUp" parameterType="member">
 		INSERT INTO MEMBER_S VALUES(
 		SEQ_MEMBER_NO_S.NEXTVAL,

@@ -95,6 +95,12 @@
 		    <version>2.9.0</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.4</version>
+		</dependency>
 		
 						
 		<!-- lombok 라이브러리 -->
