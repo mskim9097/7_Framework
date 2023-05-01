@@ -30,12 +30,32 @@
 		redirect:/		최상위로 재요청.		
 	-->
 	
+	
+	
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
 	<context:component-scan base-package="edu.kh.comm" />
+	
+	<!-- interceptors : 인터셉터를 모아둔 태그 -->
+	<interceptors>
+	
+		<!-- interceptor : 요청이 Dispatcher Servlet에서 Controller에 도달하기 전 또는 후에
+							요청/응답 객체(req, resp)를 가로채서 사용할 수 있는 객체
+		 -->
+		<interceptor>
+			
+			<!-- 가로챌 요청의 패턴을 지정 -->
+			<mapping path="/**"/>
+			
+			<!-- 인터셉터 역할을 수행할 클래스를 찾아서 bean 등록 -->
+			<beans:bean id="boardTypeInterceptor" class="edu.kh.comm.common.interceptor.BoardTypeInterceptor"/>
+			
+		</interceptor>
+	</interceptors>
+	
 	
 	
 	

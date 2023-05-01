@@ -18,7 +18,7 @@
 	
 	<!-- DataSource : java에서 Connection Pool을 지원하기 위한 인터페이스(Connection 상위호환) -->
 	<!-- destroy-method="close" : 주어진 세션을 자동으로 반환(close)하는 설정 -->	
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	<bean id="realDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
@@ -37,6 +37,28 @@
 		
 	</bean>
 	
+
+	
+	<!-- 
+		log4j를 이용한 SQL 로그 출력용 bean 생성
+	
+		* realDataSource를 이용해서 SQL 수행 내용, 결과를 출력하는 역할
+		-> realDataSource를 대체하는 역할
+	 -->
+	 <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+	 	<constructor-arg ref="realDataSource" />
+	 	
+	 	<property name="logFormatter">
+	 		<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+	 			<property name="loggingType" value="MULTI_LINE"/>
+	 			<property name="sqlPrefix" value="[SQL]" />
+	 		</bean>
+	 	</property>
+	 </bean>
+	 
+	 	
+	
+	<!-- MyBatis 관련 Bean 생성 -->
 	
 	<!-- SqlSession : sql구문을 DB에 전달, 실행하는 객체 
 		SqlSessionFactory : SqlSession을 만드는 객체 

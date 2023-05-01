@@ -72,7 +72,7 @@
 
                     <div class="profile-btn-area">
                         <label for="input-image">이미지 선택</label>
-                        <input type="file" name="profileImage" id="input-image" accept="image/*">
+                        <input type="file" name="uploadImage" id="input-image" accept="image/*">
                         <!-- accept="image/*" : 이미지 파일 확장자만 선택 허용 -->
                         <!-- accept="video/*" : 동영상 파일 확장자만 선택 허용 -->
                         <!-- accept=".pdf" : pdf파일만 선택 허용 -->
