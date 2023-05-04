@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import edu.kh.comm.board.model.dao.BoardDAO;
 import edu.kh.comm.board.model.vo.Board;
+import edu.kh.comm.board.model.vo.BoardDetail;
 import edu.kh.comm.board.model.vo.BoardType;
 import edu.kh.comm.board.model.vo.Pagination;
 
@@ -44,8 +45,47 @@ public class BoardServiceImpl implements BoardService {
 		map.put("boardList", boardList);
 		map.put("boardCode", boardCode);
 		
+		
 		return map;
 	}
+
+	// 게시글 상세 조회 서비스 구현
+	@Override
+	public BoardDetail selectBoardDetail(int boardNo) {
+
+		return dao.selectBoardDetail(boardNo);
+	}
+
+	// 조회수 증가 서비스 구현
+	@Override
+	public int updateReadCount(int boardNo) {
+
+		return dao.updateReadCount(boardNo);
+	}
+
+	// 검색 게시글 목록 조회 서비스 구현
+	@Override
+	public Map<String, Object> searchBoardList(Map<String, Object> paramMap) {
+
+		// 검색 조건에 맞는 게시글 목록의 전체 개수 조회
+		int listCount = dao.searchListCount(paramMap);
+		
+		// 페이지네이션 객체 생성
+		Pagination pagination = new Pagination((int)paramMap.get("cp"), listCount);
+		
+		// 검색 조건에 맞는 게시글 목록 조회 (페이징 처리 적용)
+		List<Board> boardList = dao.searchBoardList(paramMap, pagination);
+		
+		
+		// map담기
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("boardList", boardList);
+		
+		
+		return map;
+	}
+	
 	
 	
 }
