@@ -38,4 +38,18 @@ public interface BoardService {
 	 */
 	Map<String, Object> searchBoardList(Map<String, Object> paramMap);
 
+	
+	/** 게시글 작성 서비스
+	 * @param paramMap
+	 * @return result
+	 */
+	int boardWrite(Map<String, Object> paramMap);
+
+	
+	/** 게시글 삭제 서비스
+	 * @param boardNo
+	 * @return result
+	 */
+	int deleteBoard(int boardNo);
+
 }

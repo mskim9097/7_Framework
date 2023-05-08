@@ -85,6 +85,21 @@ public class BoardServiceImpl implements BoardService {
 		
 		return map;
 	}
+
+	// 게시글 작성 서비스 구현
+	@Override
+	public int boardWrite(Map<String, Object> paramMap) {
+		
+		return dao.boardWrite(paramMap);
+	}
+
+	
+	// 게시글 삭제 서비스 구현
+	@Override
+	public int deleteBoard(int boardNo) {
+
+		return dao.deleteBoard(boardNo);
+	}
 	
 	
 	

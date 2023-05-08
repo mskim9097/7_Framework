@@ -2,6 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>
 
+<c:forEach var="boardType" items="${boardTypeList}">
+	<c:if test="${detail.boardName == boardType.boardName}">
+		<c:set var="boardCode" value="${boardType.boardCode}"/>
+	</c:if>
+</c:forEach>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -134,8 +139,8 @@
                     </c:if>
 
 
-                    <button id="updateBtn" onclick="location.href='../../write/${boardCode}?mode=update&cp=${cp}&no=${detail.boardNo}'">수정</button>                       
-                    <button id="deleteBtn">삭제</button>
+                    <button id="updateBtn" onclick="location.href='../../write/${param.boardCode}?mode=update&cp=${cp}&no=${detail.boardNo}'">수정</button>                       
+                    <button id="deleteBtn" onclick="location.href='../../deleteBoard/${boardCode}/${detail.boardNo}'">삭제</button>
                 </c:if>
 
                 <!-- onclick="history.back();"  뒤로가기 

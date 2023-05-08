@@ -221,4 +221,23 @@
 		
 	</select>
 	
+	<!-- 게시글 등록 -->
+	<insert id="insertBoard">
+		INSERT INTO BOARD VALUES(
+			SEQ_BOARD_NO.NEXTVAL, #{boardTitle}, #{boardContent}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ${memberNo}, ${type}
+	</insert>
+	
+	<!-- 이미지 등록 -->
+	<insert id="insertImg">
+		INSERT INTO BOARD_IMG VALUES(
+			SEQ_IMG_NO.NEXTVAL, ?, ?, ?, ?)
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	
+	
+	<!-- 게시글 삭제 -->
+	<update id="deleteBoard">
+		UPDATE BOARD SET BOARD_ST = 'Y' WHERE BOARD_NO = #{boardNo}
+	</update>
 </mapper>

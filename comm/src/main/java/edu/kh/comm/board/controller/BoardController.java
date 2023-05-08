@@ -1,6 +1,8 @@
 package edu.kh.comm.board.controller;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,17 +15,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.comm.board.model.service.BoardService;
 import edu.kh.comm.board.model.vo.BoardDetail;
 import edu.kh.comm.common.Util;
 import edu.kh.comm.member.model.vo.Member;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("/board")
+@SessionAttributes({"loginMember"}) 
 public class BoardController {
 
 	@Autowired
@@ -197,6 +206,83 @@ public class BoardController {
 		}
 		
 		return "board/boardWriteForm";
+	}
+	
+	
+	// 게시글 작성
+	@PostMapping("/write")
+	public String boardWrite(@ModelAttribute("loginMember") Member loginMember,
+							RedirectAttributes ra,
+							@RequestParam Map<String, Object> paramMap,
+							@RequestParam("0") MultipartFile image0, /*업로드 파일*/
+							@RequestParam("1") MultipartFile image1, /*업로드 파일*/
+							@RequestParam("2") MultipartFile image2, /*업로드 파일*/
+							@RequestParam("3") MultipartFile image3, /*업로드 파일*/
+							@RequestParam("4") MultipartFile image4, /*업로드 파일*/
+							HttpServletRequest req /* 파일 저장 경로 탐색용 */
+							) throws IOException {
+		
+		// 경로 작성하기
+		
+		// 1) 웹 접근 경로 ( /comm/resources/images/memberProfile/ )
+		String webPath = "/resources/images/board/";
+				
+		// 2) 서버 저장 폴더 경로
+		String folderPath = req.getSession().getServletContext().getRealPath(webPath);
+		// C:\workspace\7_Framework\comm\src\main\webapp\resources\images\memberProfile
+		// Users\mskim\workspace\7_Framework\comm\src\main\webapp\resources\images\memberProfile
+		
+		paramMap.put("memberNo", loginMember.getMemberNo());
+		paramMap.put("webPath", webPath);
+		paramMap.put("folderPath", folderPath);
+		
+		MultipartFile[] imgLevel = {image0, image1, image2, image3, image4};
+		
+		paramMap.put("imgLevel", imgLevel);
+		
+		
+		int result = service.boardWrite(paramMap);
+		
+		String message = null;
+		
+		if(result > 0 && paramMap.get("mode").equals("insert")) {
+			message = "게시글이 등록되었습니다";
+		} else if(result > 0 && paramMap.get("mode").equals("update")) {
+			message = "게시글이 수정되었습니다";
+		} else {
+			message = "게시글 등록에 실패하였습니다";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return null;
+		
+	}
+	
+	// 게시판 삭제
+	@GetMapping("/deleteBoard/{boardCode}/{boardNo}")
+	public String deleteBoard (@PathVariable("boardNo") int boardNo,
+								@PathVariable("boardCode") int boardCode,
+								@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+								RedirectAttributes ra) {
+		
+		int result = service.deleteBoard(boardNo);
+		
+		String message = null;
+		String path = null;
+		
+		if(result > 0) {
+			message = "게시글이 삭제되었습니다";
+			path = "redirect:/board/list/" + boardCode;
+		} else {
+			message = "게시글 삭제에 실패하였습니다";
+			path = "redirect:/board/detail/" + boardCode + "/" + boardNo + "?cp=" + cp;
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return path;
+		
 	}
 	
 }

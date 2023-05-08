@@ -94,4 +94,37 @@ public class BoardDAO {
 		
 		return sqlSession.selectList("boardMapper.searchBoardList", paramMap, rowBounds);
 	}
+
+	/** 게시글 작성 DAO
+	 * @param paramMap
+	 * @return result
+	 */
+	public int boardWrite(Map<String, Object> paramMap) {
+
+		int result = 0;
+		
+		String mode = (String)paramMap.get("mode");
+		
+		if(mode.equals("insert")) {
+			result = sqlSession.insert("boardMapper.insertBoard", paramMap);
+		} else if (mode.equals("insert") && paramMap.get("image") != null) {
+			
+			
+			
+		}
+			 
+		
+		
+		return result;
+	}
+
+	
+	/** 게시글 삭제 DAO
+	 * @param boardNo
+	 * @return result
+	 */
+	public int deleteBoard(int boardNo) {
+
+		return sqlSession.update("boardMapper.deleteBoard", boardNo);
+	}
 }
