@@ -24,6 +24,9 @@ function selectReplyList(){
                 // 행
                 const replyRow = document.createElement("li");
                 replyRow.classList.add("reply-row");
+                
+                // 답글일 경우 child-reply 클래스 추가
+                if(reply.parentReplyNo != 0)  replyRow.classList.add("child-reply");
 
 
                 // 작성자
@@ -63,35 +66,47 @@ function selectReplyList(){
                 // 행에 작성자, 내용 추가
                 replyRow.append(replyWriter, replyContent);
 
-                // 로그인한 회원번호와 댓글 작성자의 회원번호가 같을 때만 버튼 추가
-                if( loginMemberNo == reply.memberNo   ){
-
+                // 로그인이 되어있는 경우 답글 버튼 추가
+                if(loginMemberNo != ""){
                     // 버튼 영역
                     const replyBtnArea = document.createElement("div");
                     replyBtnArea.classList.add("reply-btn-area");
 
-                    // 수정 버튼
-                    const updateBtn = document.createElement("button");
-                    updateBtn.innerText = "수정";
+                    // 답글 버튼
+                    const childReplyBtn = document.createElement("button");
+                    childReplyBtn.setAttribute("onclick", "showInsertReply("+reply.replyNo+", this)");
+                    childReplyBtn.innerText = "답글";
 
-                    // 수정 버튼에 onclick 이벤트 속성 추가
-                    updateBtn.setAttribute("onclick", "showUpdateReply("+reply.replyNo+", this)");                        
+                    // 버튼 영역에 답글 버튼 추가
+                    replyBtnArea.append(childReplyBtn);
+
+                    // 로그인한 회원번호와 댓글 작성자의 회원번호가 같을 때만 버튼 추가
+                    if( loginMemberNo == reply.memberNo   ){
+
+                        // 수정 버튼
+                        const updateBtn = document.createElement("button");
+                        updateBtn.innerText = "수정";
+
+                        // 수정 버튼에 onclick 이벤트 속성 추가
+                        updateBtn.setAttribute("onclick", "showUpdateReply("+reply.replyNo+", this)");                        
 
 
-                    // 삭제 버튼
-                    const deleteBtn = document.createElement("button");
-                    deleteBtn.innerText = "삭제";
-                    // 삭제 버튼에 onclick 이벤트 속성 추가
-                    deleteBtn.setAttribute("onclick", "deleteReply("+reply.replyNo+")");                       
+                        // 삭제 버튼
+                        const deleteBtn = document.createElement("button");
+                        deleteBtn.innerText = "삭제";
+                        // 삭제 버튼에 onclick 이벤트 속성 추가
+                        deleteBtn.setAttribute("onclick", "deleteReply("+reply.replyNo+")");                       
 
 
-                    // 버튼 영역 마지막 자식으로 수정/삭제 버튼 추가
-                    replyBtnArea.append(updateBtn, deleteBtn);
+                        // 버튼 영역 마지막 자식으로 수정/삭제 버튼 추가
+                        replyBtnArea.append(updateBtn, deleteBtn);
+
+                    } // if 끝
+                    
 
                     // 행에 버튼영역 추가
                     replyRow.append(replyBtnArea); 
-
-                } // if 끝
+                }
 
 
                 // 댓글 목록(ul)에 행(li)추가
@@ -333,4 +348,119 @@ function updateReply(replyNo, btn){
             console.log(req.responseText);
         }
     });
+}
+
+
+// --------------------------------------------------------------------------------------------------------
+
+
+// 답글 작성 화면 추가 
+// -> 답글 작성 화면은 전체 화면에 1개만 존재 해야한다!
+
+function showInsertReply(parentReplyNo, btn){
+                        // 부모 댓글 번호, 클릭한 답글 버튼
+
+
+    const temp = document.getElementsByClassName("replyInsertContent");
+
+    if(temp.length > 0){ // 답글 작성 textara가 이미 화면에 존재하는 경우
+
+        if(confirm("다른 답글을 작성 중입니다. 현재 댓글에 답글을 작성 하시겠습니까?")){
+            temp[0].nextElementSibling.remove(); // 버튼 영역부터 삭제
+            temp[0].remove(); // textara 삭제 (기준점은 마지막에 삭제해야 된다!)
+        
+        } else{
+            return; // 함수를 종료시켜 답글이 생성되지 않게함.
+        }
+    }
+    
+    // 답글을 작성할 textarea 요소 생성
+    const textarea = document.createElement("textarea");
+    textarea.classList.add("replyInsertContent");
+    
+    // 답글 버튼의 부모의 뒤쪽에 textarea 추가
+    // after(요소) : 뒤쪽에 추가
+    btn.parentElement.after(textarea);
+
+
+    // 답글 버튼 영역 + 등록/취소 버튼 생성 및 추가
+    const replyBtnArea = document.createElement("div");
+    replyBtnArea.classList.add("reply-btn-area");
+
+
+    const insertBtn = document.createElement("button");
+    insertBtn.innerText = "등록";
+    insertBtn.setAttribute("onclick", "insertChildReply("+parentReplyNo+", this)");
+
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.innerText = "취소";
+    cancelBtn.setAttribute("onclick", "insertCancel(this)");
+
+    // 답글 버튼 영역의 자식으로 등록/취소 버튼 추가
+    replyBtnArea.append(insertBtn, cancelBtn);
+
+    // 답글 버튼 영역을 화면에 추가된 textarea 뒤쪽에 추가
+    textarea.after(replyBtnArea);
+
+}
+
+
+// 답글 취소
+function insertCancel(btn){
+                    // 취소
+    btn.parentElement.previousElementSibling.remove(); // 취소의 부모의 이전 요소(textarea) 제거
+    btn.parentElement.remove(); // 취소의 부모 요소(reply-btn-area) 제거
+}
+
+
+// 답글 등록
+function insertChildReply(parentReplyNo, btn){
+                        // 부모 댓글 번호, 답글 등록 버튼
+
+    // 누가?                로그인한 회원의 memberNo ==> loginMemberNo (전역변수)
+    // 어떤 내용?           textarea에 작성된 내용
+    // 몇번 게시글?         현재 게시글 boardNo ==> boardNo (전역변수)
+    // 부모 댓글은 누구?    parentReplyNo (매개변수)
+
+    // 답글 내용
+    const replyContent = btn.parentElement.previousElementSibling.value;
+
+    // 답글 내용이 작성되지 않은 경우
+    if(replyContent.trim().length == 0){
+        alert("답글 작성 후 등록 버튼을 클릭해주세요.");
+        btn.parentElement.previousElementSibling.value = "";
+        btn.parentElement.previousElementSibling.focus();
+        return;
+    }
+
+
+    // 위 if문이 실행 안됨 == 답글이 작성됨 -> ajax 답글 삽입
+    // "{K:V, K:V, K:V}" -> JSON
+
+    $.ajax({
+        url : contextPath + "/reply/insert",
+
+        data : {"memberNo" : loginMemberNo,
+                "boardNo" : boardNo,
+                "parentReplyNo" : parentReplyNo,
+                "replyContent" : replyContent},
+
+        type : "POST",
+
+        success : function(r){
+            if(r > 0){
+                alert("답글이 등록되었습니다.");
+                selectReplyList(); // 댓글 목록 조회
+            }else{
+                alert("답글 등록 실패");
+            }
+        },
+        error : function(){
+            console.log("답글 등록 중 오류 발생");
+        }
+    });
+
+
+
 }

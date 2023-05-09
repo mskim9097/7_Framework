@@ -8,7 +8,8 @@
         <ul id="reply-list">
 
             <c:forEach var="reply" items="${rList}">
-                <li class="reply-row">
+                							<%-- 답글일 경우 --%>
+                <li class='reply-row  <c:if test="${reply.parentReplyNo != 0}"> child-reply </c:if>'>
                     <p class="reply-writer">
 
                         <c:if test="${empty reply.profileImage}">
@@ -27,12 +28,18 @@
                     
                     <p class="reply-content">${reply.replyContent}</p>
 
-                    <c:if test="${loginMember.memberNo == reply.memberNo}">
+                    <%-- 로그인 상태인 경우 답글 버튼 출력 --%>
+                    <c:if test="${!empty loginMember}">
                         <div class="reply-btn-area">
 
-                            <button onclick="showUpdateReply(${reply.replyNo}, this);">수정</button>     
+                            <button onclick="showInsertReply(${reply.replyNo}, this)">답글</button>
 
-                            <button onclick="deleteReply(${reply.replyNo})">삭제</button>
+                            <%-- 로그인한 회원의 댓글인 경우 --%>
+                            <c:if test="${loginMember.memberNo == reply.memberNo}">
+                                <button onclick="showUpdateReply(${reply.replyNo}, this);">수정</button>     
+                                <button onclick="deleteReply(${reply.replyNo})">삭제</button>
+                            </c:if>
+
                         </div>
                     </c:if>
                 </li>
