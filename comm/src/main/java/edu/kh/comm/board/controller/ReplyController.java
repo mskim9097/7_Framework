@@ -1,10 +1,13 @@
 package edu.kh.comm.board.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -30,13 +33,29 @@ public class ReplyController {
 	
 	// 댓글 목록 조회
 	@GetMapping("/selectReplyList")
-	public List<Reply> selectReply (int boardNo) {
-		System.out.println("시발" + boardNo);
-		return service.selectReply(boardNo);
+	public String selectReplyList (int boardNo) {
+		
+		 List<Reply> rList = service.selectReplyList(boardNo);
+		
+		return new Gson().toJson(rList);
 	}
 	// 댓글 등록
-	
+	@PostMapping("/insert")
+	public int insertReply(Reply reply) {
+		
+		return service.insertReply(reply);
+	}
 	// 댓글 수정
+	@PostMapping("/update")
+	public int updateReply(@RequestParam Map<String, Object> map) {
+		
+		return service.updateReply(map);
+	}
 	
 	// 댓글 삭제
+	@GetMapping("/delete")
+	public int deleteReply(@RequestParam Map<String, Object> map) {
+		
+		return service.deleteReply(map);
+	}
 }

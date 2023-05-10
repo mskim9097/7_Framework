@@ -1,6 +1,7 @@
 package edu.kh.comm.board.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,35 @@ public class ReplyDAO {
 	 * @param boardNo
 	 * @return rList
 	 */
-	public List<Reply> selectReply(int boardNo) {
+	public List<Reply> selectReplyList(int boardNo) {
 
-		return sqlSession.selectList("replyMapper.selectReply", boardNo);
+		return sqlSession.selectList("replyMapper.selectReplyList", boardNo);
+	}
+
+	/** 댓글 등록 DAO
+	 * @param reply
+	 * @return result
+	 */
+	public int insertReply(Reply reply) {
+
+		return sqlSession.insert("replyMapper.insertReply", reply);
+	}
+
+	/** 댓글 수정 DAO
+	 * @param map
+	 * @return result
+	 */
+	public int updateReply(Map<String, Object> map) {
+		
+		return sqlSession.update("replyMapper.updateReply", map);
+	}
+
+	/** 댓글 삭제 DAO
+	 * @param map
+	 * @return result
+	 */
+	public int deleteReply(Map<String, Object> map) {
+
+		return sqlSession.update("replyMapper.deleteReply", map);
 	}
 }
