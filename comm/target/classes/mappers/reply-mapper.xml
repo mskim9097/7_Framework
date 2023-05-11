@@ -94,7 +94,13 @@
 	
 	<!-- 댓글 삭제 -->
 	<update id="deleteReply">
-		UPDATE REPLY_S SET REPLY_ST = 'Y' WHERE REPLY_NO = #{replyNo} OR PARENT_REPLY_NO = #{replyNo}
+		UPDATE REPLY_S SET REPLY_ST = 'Y' 
+		WHERE REPLY_NO IN (SELECT REPLY_NO
+							FROM REPLY_S
+							START WITH REPLY_NO = #{replyNo}
+							CONNECT BY PRIOR REPLY_NO = PARENT_REPLY_NO
+							AND LEVEL > 0
+							)
 	</update>
 		
 </mapper>
