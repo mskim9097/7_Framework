@@ -1,0 +1,254 @@
+/* section, div, form{
+    border : 1px solid black;
+} */
+
+/* a태그 공통 설정 */
+.board-list a{
+    text-decoration: none;
+    color : black;
+}
+
+.board-list a:hover{
+    text-decoration: underline;
+}
+
+/* 게시판 목록 화면 전체 영역 설정 */
+.board-list{
+    width: 1000px;
+    margin: 50px auto;
+}
+
+/* 게시판 이름 */
+.board-name{
+    font-size: 2.5em;
+    margin-left: 30px;
+}
+
+/* 게시글 목록 영역 */
+.list-wrapper{
+    width: 100%;
+    min-height: 670px;
+}
+
+/* 목록 출력 테이블 */
+.list-table{
+    width: 100%;
+    padding: 20px;
+
+    /* 테두리 상쇄 여부 지정 
+        -> 고유 테두리를 지닌 요소와 겹치는 경우
+           테두리를 분리할지 상쇄(덮어쓰기) 할지 지정
+    */
+    border-collapse: collapse;
+}
+
+.list-table > thead{
+    background-color: #455ba8;
+    color : white
+}
+
+.list-table tr{
+    height: 60px;
+}
+
+.list-table > tbody > tr{
+    border-bottom : 1px solid gray;
+}
+
+.list-table tr > *{
+    text-align: center;
+}
+
+.list-table tr > *:nth-of-type(1){ width: 10%;}
+.list-table tr > td:nth-of-type(2){ 
+    width: 50%;
+    text-align: left;
+    padding-left : 50px;
+}
+
+.list-table tr > *:nth-of-type(3){ width: 15%;}
+.list-table tr > *:nth-of-type(4){ width: 15%;}
+.list-table tr > *:nth-of-type(5){ width: 10%;}
+
+
+/* 버튼 영역 */
+.btn-area{
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* 글쓰기 버튼 */
+#insertBtn{
+    margin-right: 50px;
+
+    width: 80px;
+    height: 40px;
+
+    background-color: white;
+    border: 2px solid #455ba8;
+    color:#455ba8;
+
+    border-radius: 5px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* 페이지네이션(Pagination) */
+.pagination{
+    padding: 0;
+    list-style: none;
+
+    display: flex;
+    justify-content: center;
+}
+
+.pagination > li{
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.pagination a{
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* letter-spacing : -2px; */
+}
+
+/* 현재 페이지 번호 */
+.pagination .current{
+    background-color: #455ba8;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+}
+
+
+/* 검색 영역 */
+#boardSearch{
+    width: 500px;
+    height: 30px;
+
+    display: flex;
+    justify-content: space-between;
+
+    margin: 30px auto;
+}
+
+/* 검색 영역 공통 스타일 */
+#boardSearch *{
+    box-sizing: border-box;
+    padding : 0;
+    margin : 0;
+}
+
+#boardSearch select{
+    width: 100px;
+}
+
+#boardSearch input{
+    flex-grow: 1;
+    margin: 0 10px;
+    padding-left: 10px;
+}
+
+#boardSearch button{
+    width: 100px;
+
+    background-color: #455ba8;
+    color: white;
+    border : 0;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* 썸네일 관련 스타일 */
+.list-table tr > td:nth-of-type(2){ /* 2번째 td(제목) */
+    position: relative;
+}
+
+.list-thumbnail{ /* 썸네일 이미지 */
+    max-width: 50px;
+    max-height: 30px;
+
+    position: absolute;
+    left : -15px;
+    top : 17px;
+}
+
+
+/**********************************************/
+/* modal : 화면내에 html 요소를 이용해서 만드는 분할 창 */
+.modal{
+    background-color: rgba(0, 0, 0, 0.4);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 50;
+
+    display: none;
+}
+
+.modal.show { /* 클래스로 modal, show를 동시에 가진 요소 선택 */
+    display: flex;
+
+    animation-name: show; /* @keyframes  show 적용 */
+    animation-duration: 0.5s;  /* 애니메이션 수행 시간 */
+}
+
+.modal.hide{
+    animation-name: hide; /* @keyframes  show 적용 */
+    animation-duration: 0.5s;  /* 애니메이션 수행 시간 */
+}
+
+#modal-image {
+    background-color: white;
+    margin: auto;
+    border-radius: 10px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 닫기 버튼 */
+#modal-close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+#modal-close:hover{
+    transform: scale(1.2);
+}
+
+
+
+/* @keyframes : 
+애니메이션 중간중간의 특정 지점들을 거칠 수 있는 키프레임들을 설정함으로써
+CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  */
+@keyframes show {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes hide {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}

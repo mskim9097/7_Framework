@@ -6,7 +6,9 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
@@ -89,5 +91,32 @@
 	
 	<!-- @Scheduled 어노테이션 인식을 위한 태그 -->
 	<task:annotation-driven/>
+	
+	
+	<!-- Websocket 요청 시 핸들러 클래스와 연결하기 -->
+	<beans:bean id="chatHandler" class="edu.kh.comm.chat.model.websocket.ChatWebsocketHandler"/>
+	
+	
+	<websocket:handlers>
+		
+		<!-- 웹소켓 요청을 처리한 bean 지정 -->
+		<websocket:mapping handler="chatHandler" path="/chat" />
+		
+		<websocket:handshake-interceptors>
+			<!-- interceptor : http 통신 req, resp 가로채는 역할 
+			
+			handshake-interceptor : 
+					요청 관련 데이터 중 HttpSession(로그인정보, 채팅방번호)을 가로채서
+					WebsocketSession에 넣어주는 역할
+			
+			-->			
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		
+		<!-- SockJS 라이브러리를 이용해서 만들어진 웹소켓 객체임을 인식 -->
+		<websocket:sockjs></websocket:sockjs>
+		
+		
+	</websocket:handlers>
 	
 </beans:beans>

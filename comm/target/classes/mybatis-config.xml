@@ -24,6 +24,11 @@
 		<typeAlias type="edu.kh.comm.board.model.vo.BoardImage" alias="boardImage"/>
 		<typeAlias type="edu.kh.comm.board.model.vo.BoardType" alias="boardType"/>
 		<typeAlias type="edu.kh.comm.board.model.vo.Reply" alias="reply"/>
+		
+		<typeAlias type="edu.kh.comm.chat.model.vo.ChatRoom" alias="chatRoom"/>
+		<typeAlias type="edu.kh.comm.chat.model.vo.ChatRoomJoin" alias="chatRoomJoin"/>
+		<typeAlias type="edu.kh.comm.chat.model.vo.ChatMessage" alias="chatMessage"/>
+		
 	</typeAliases>
 	
 	
@@ -38,6 +43,8 @@
 		<mapper resource="/mappers/myPage-mapper.xml"/>
 		<mapper resource="/mappers/board-mapper.xml"/>
 		<mapper resource="/mappers/reply-mapper.xml"/>
+		
+		<mapper resource="/mappers/chatting-mapper.xml"/>
 	</mappers>
 	
 </configuration>
