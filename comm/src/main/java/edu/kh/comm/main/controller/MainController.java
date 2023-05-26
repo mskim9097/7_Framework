@@ -12,4 +12,10 @@ public class MainController {
 		return "common/main";
 	}
 	
+	@RequestMapping("/test")
+	public String testForward() {
+		
+		return "common/header";
+	}
+	
 }
