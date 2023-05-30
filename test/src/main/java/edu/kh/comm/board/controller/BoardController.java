@@ -336,4 +336,7 @@ public class BoardController {
 		return "/board/test";
 	}
 	
+	// 테스트 처음
+	
+	
 }

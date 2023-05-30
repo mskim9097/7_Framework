@@ -24,6 +24,26 @@
 		
 		<!-- JDBC, Mybatis, DBCP 관련 라이브러리 -->
 		
+		<!-- Spring Websocket -->
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-websocket</artifactId>
+	        <version>5.3.14.RELEASE</version>
+	    </dependency>
+	    <!-- Spring MVC -->
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-webmvc</artifactId>
+	        <version>5.3.14.RELEASE</version>
+	    </dependency>
+	    <!-- Tomcat WebSocket -->
+	    <dependency>
+	        <groupId>org.apache.tomcat.embed</groupId>
+	        <artifactId>tomcat-embed-websocket</artifactId>
+	        <version>9.0.73</version>
+	    </dependency>
+		
+		
 		<!-- JDBC 드라이버 (ojdbc11) -->
 		<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc11 -->
 		<dependency>
