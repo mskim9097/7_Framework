@@ -36,7 +36,7 @@ public class ImageDeleteScheduling {
 	// 스케쥴링에 사용되는 메서드는 무조건 public void 메서드명()
 	
 	
-	@Scheduled(cron = "0 * * * * *") // 매 분마다(테스트용)
+	@Scheduled(cron = "0 0 12 * * *") // 매 분마다(테스트용)
 	public void serverImageDelete() {
 		
 		// 1) BOARD_IMG에 존재하는 모든 이미지 목록 조회

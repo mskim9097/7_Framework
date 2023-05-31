@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/main-style.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/boardDetail-style.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/chat-style.css">
+	
+	 <!-- 썸머노트 라이브러리 연결 -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
     <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
 </head>
@@ -52,8 +56,9 @@
 				</c:forEach>
 			</ul>	
 		
+			
 			<div class="input-area">
-				<textarea id="inputChatting" rows="3"></textarea>
+				<textarea id="summernote" name="boardContent" placeholder="테스트용"></textarea>
 				<button id="send">보내기</button>
 			</div>
 		</div>

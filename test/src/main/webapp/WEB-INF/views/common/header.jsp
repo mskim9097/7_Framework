@@ -75,5 +75,19 @@
 
 
         <li><a href="${contextPath}/board/test">테스트</a></li>
+        <li>
+        	<form action="member/login" method="POST">
+        		<input type="hidden" name="memberEmail" value="test01@naver.com">
+        		<input type="hidden" name="memberPw" value="pass01!">
+        	<button>테스트로그인1</button>
+        	</form>
+        </li>
+        <li>
+        	<form action="member/login" method="POST">
+        		<input type="hidden" name="memberEmail" value="test02@naver.com">
+        		<input type="hidden" name="memberPw" value="pass02!">
+        	<button>테스트로그인2</button>
+        	</form>
+        </li>
     </ul>
 </nav>
