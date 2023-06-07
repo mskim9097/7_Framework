@@ -30,7 +30,7 @@
 	
 	<!-- 날짜별 로그 파일 생성용 appender -->
 	<appender name="dailyRollingFile"  class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File"  value="C:\\workspace\\7_Framework\\comm\\logs\\runtime-log.log" />
+		<param name="File"  value="C:\\workspace\\turtle\\Turtle\\logs\\runtime-log.log" />
 		<param name="encoding" value="UTF-8" />
 		<param name="Append" value="true" />
 		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
@@ -45,7 +45,7 @@
 	<!-- 이 패키지 이하에서 출력되는 로그들을 출력하겠다.  
 		trace < debug < info < warn < error < fatal
 	-->
-	<logger name="edu.kh.comm">
+	<logger name="com.turtle.www">
 		<level value="debug" />
 		<appender-ref ref="dailyRollingFile"/>
 	</logger>
